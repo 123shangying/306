@@ -97,7 +97,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
             android:theme="@style/NoActionBar"
-            android:windowSoftInputMode="adjustPan|stateHidden" /> <!-- 承载界面 -->
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            tools:ignore="Instantiatable" /> <!-- 承载界面 -->
         <activity
             android:name=".ui.activity.HomeActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|keyboardHidden"

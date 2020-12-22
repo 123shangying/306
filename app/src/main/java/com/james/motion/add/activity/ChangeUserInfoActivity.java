@@ -23,10 +23,6 @@ import android.widget.Toast;
 import com.james.motion.R;
 
 public class ChangeUserInfoActivity extends AppCompatActivity {
-    private TextView tv_main_title, tv_save;
-    private RelativeLayout rl_title_bar;
-    private TextView tv_back;
-    private String title, content;
     private int flag;//flag为1时表示修改昵称，为2时表示修改签名
     private EditText et_content;
     private ImageView iv_delete;
@@ -40,15 +36,15 @@ public class ChangeUserInfoActivity extends AppCompatActivity {
     }
     private void init() {
         // 从个人资料界面传递过来的标题和内容
-        title = getIntent().getStringExtra("title");
-        content = getIntent().getStringExtra("content");
+        String title = getIntent().getStringExtra("title");
+        String content = getIntent().getStringExtra("content");
         flag = getIntent().getIntExtra("flag", 0);
-        tv_main_title = (TextView) findViewById(R.id.tv_main_title);
+        TextView tv_main_title = (TextView) findViewById(R.id.tv_main_title);
         tv_main_title.setText(title);
-        rl_title_bar = (RelativeLayout) findViewById(R.id.title_bar);
+        RelativeLayout rl_title_bar = (RelativeLayout) findViewById(R.id.title_bar);
         rl_title_bar.setBackgroundColor(Color.parseColor("#40c632"));
-        tv_back = (TextView) findViewById(R.id.tv_back);
-        tv_save = (TextView) findViewById(R.id.tv_save);
+        TextView tv_back = (TextView) findViewById(R.id.tv_back);
+        TextView tv_save = (TextView) findViewById(R.id.tv_save);
         tv_save.setVisibility(View.VISIBLE);
         et_content = (EditText) findViewById(R.id.et_content);
         iv_delete = (ImageView) findViewById(R.id.iv_delete);
@@ -57,49 +53,36 @@ public class ChangeUserInfoActivity extends AppCompatActivity {
             et_content.setSelection(content.length());
         }
         contentListener();
-        tv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChangeUserInfoActivity.this.finish();
-            }
-        });
-        iv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                et_content.setText("");
-            }
-        });
-        tv_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent data = new Intent();
-                String etContent = et_content.getText().toString().trim();
-                switch (flag) {
-                    case 1:
-                        if (!TextUtils.isEmpty(etContent)) {
-                            data.putExtra("nickName", etContent);
-                            setResult(RESULT_OK, data);
-                            Toast.makeText(ChangeUserInfoActivity.this, "保存成功",
-                                    Toast.LENGTH_SHORT).show();
-                            ChangeUserInfoActivity.this.finish();
-                        } else {
-                            Toast.makeText(ChangeUserInfoActivity.this, "昵称不能为空",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    case 2:
-                        if (!TextUtils.isEmpty(etContent)) {
-                            data.putExtra("signature", etContent);
-                            setResult(RESULT_OK, data);
-                            Toast.makeText(ChangeUserInfoActivity.this, "保存成功",
-                                    Toast.LENGTH_SHORT).show();
-                            ChangeUserInfoActivity.this.finish();
-                        } else {
-                            Toast.makeText(ChangeUserInfoActivity.this, "签名不能为空",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                }
+        tv_back.setOnClickListener(v -> ChangeUserInfoActivity.this.finish());
+        iv_delete.setOnClickListener(v -> et_content.setText(""));
+        tv_save.setOnClickListener(v -> {
+            Intent data = new Intent();
+            String etContent = et_content.getText().toString().trim();
+            switch (flag) {
+                case 1:
+                    if (!TextUtils.isEmpty(etContent)) {
+                        data.putExtra("nickName", etContent);
+                        setResult(RESULT_OK, data);
+                        Toast.makeText(ChangeUserInfoActivity.this, "保存成功",
+                                Toast.LENGTH_SHORT).show();
+                        ChangeUserInfoActivity.this.finish();
+                    } else {
+                        Toast.makeText(ChangeUserInfoActivity.this, "昵称不能为空",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case 2:
+                    if (!TextUtils.isEmpty(etContent)) {
+                        data.putExtra("signature", etContent);
+                        setResult(RESULT_OK, data);
+                        Toast.makeText(ChangeUserInfoActivity.this, "保存成功",
+                                Toast.LENGTH_SHORT).show();
+                        ChangeUserInfoActivity.this.finish();
+                    } else {
+                        Toast.makeText(ChangeUserInfoActivity.this, "签名不能为空",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    break;
             }
         });
     }

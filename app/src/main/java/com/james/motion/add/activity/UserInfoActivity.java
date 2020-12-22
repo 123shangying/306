@@ -1,6 +1,6 @@
 package com.james.motion.add.activity;
 
-/**
+/*
  * author : shangying
  * date   : 2019/10/26
  */
@@ -25,10 +25,10 @@ import com.james.motion.add.utils.DBUtils;
 
 public class UserInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tv_back;
-    private TextView tv_main_title;
     private TextView tv_nickName, tv_signature, tv_user_name, tv_sex;
-    private RelativeLayout rl_nickName, rl_sex, rl_signature,
-            rl_title_bar;
+    private RelativeLayout rl_nickName;
+    private RelativeLayout rl_sex;
+    private RelativeLayout rl_signature;
     private static final int CHANGE_NICKNAME = 1;//修改昵称的自定义常量
     private static final int CHANGE_SIGNATURE = 2;//修改个性签名的自定义常量
     private String spUserName;
@@ -49,9 +49,9 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
      */
     private void init() {
         tv_back = (TextView) findViewById(R.id.tv_back);
-        tv_main_title = (TextView) findViewById(R.id.tv_main_title);
+        TextView tv_main_title = (TextView) findViewById(R.id.tv_main_title);
         tv_main_title.setText("个人资料");
-        rl_title_bar = (RelativeLayout) findViewById(R.id.title_bar);
+        RelativeLayout rl_title_bar = (RelativeLayout) findViewById(R.id.title_bar);
         rl_title_bar.setBackgroundColor(Color.parseColor("#40c632"));
         rl_nickName = (RelativeLayout) findViewById(R.id.rl_nickName);
         rl_sex = (RelativeLayout) findViewById(R.id.rl_sex);
@@ -65,8 +65,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
      * 获取数据
      */
     private void initData() {
-        UserBean bean = null;
-        bean = DBUtils.getInstance(this).getUserInfo(spUserName);
+        UserBean bean = DBUtils.getInstance(this).getUserInfo(spUserName);
         // 首先判断一下数据库是否有数据
         if (bean == null) {
             bean = new UserBean();
@@ -138,11 +137,10 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     private void sexDialog(String sex){
         int sexFlag=0;
         if("男".equals(sex)){
-            sexFlag=0;
         }else if("女".equals(sex)){
             sexFlag=1;
         }
-        final String items[]={"男","女"};
+        final String[] items ={"男","女"};
         AlertDialog.Builder builder=new AlertDialog.Builder(this);  //先得到构造器
         builder.setTitle("性别"); //设置标题
         builder.setSingleChoiceItems(items,sexFlag,new DialogInterface.OnClickListener() {
@@ -155,7 +153,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         });
         builder.create().show();
     }
-    /**
+    /*
      * 更新界面上的性别数据
      */
     private void setSex(String sex){
@@ -164,13 +162,15 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         DBUtils.getInstance(UserInfoActivity.this).updateUserInfo("sex",
                 sex, spUserName);
     }
-    /**
-     * 回传数据
-     */
-    private String new_info;//最新数据
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        /*
+         * 回传数据
+         */
+        //最新数据
+        String new_info;
         switch (requestCode) {
             case CHANGE_NICKNAME://个人资料修改界面回传过来的昵称数据
                 if (data != null) {

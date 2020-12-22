@@ -1,8 +1,5 @@
 package com.james.motion.add.activity;
-/**
- * author : shangying
- * date   : 2019/10/26
- */
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -10,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,24 +15,18 @@ import android.widget.Toast;
 import com.james.motion.R;
 import com.james.motion.add.utils.MD5Utils;
 import com.james.motion.ui.activity.GuidePageActivity;
-import com.james.motion.ui.activity.LoginActivity;
 import com.james.motion.ui.activity.MainActivity;
-import com.james.motion.ui.activity.SplashActivity;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class Denglu extends AppCompatActivity {
-    private TextView tv_main_title;
-    private TextView tv_back,tv_register,tv_find_psw;
-    private Button btn_login;
     private String userName,psw,spPsw;
     private EditText et_user_name,et_psw;
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor editor;
     private Handler handler;
-    private Runnable runnable;
+    //private Runnable runnable;
+
+    public Denglu(Handler handler) {
+        this.handler = handler;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +42,13 @@ public class Denglu extends AppCompatActivity {
          //   super.onCreate(savedInstanceState);
             // requestWindowFeature(Window.FEATURE_NO_TITLE);
             //   setContentView(R.layout.activity_login);
-            preferences = getSharedPreferences("guideActivity", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("guideActivity", MODE_PRIVATE);
 // 判断是不是首次登录
             if (preferences.getBoolean("firstStart", true)) {
-                editor = preferences.edit();
+                SharedPreferences.Editor editor = preferences.edit();
 // 将登录标志位设置为false，下次登录时不在显示引导页
                 editor.putBoolean("firstStart", false);
-                editor.commit();
+                editor.apply();
 
 //跳转到引导页
                 Intent intent = new Intent();
@@ -83,74 +73,56 @@ public class Denglu extends AppCompatActivity {
      * 获取界面控件
      */
     private void init(){
-        tv_main_title=(TextView) findViewById(R.id.tv_main_title);
+        TextView tv_main_title = (TextView) findViewById(R.id.tv_main_title);
         tv_main_title.setText("登录");
-        tv_back=(TextView) findViewById(R.id.tv_back);
-        tv_register=(TextView) findViewById(R.id.tv_register);
-        tv_find_psw= (TextView) findViewById(R.id.tv_find_psw);
-        btn_login=(Button) findViewById(R.id.btn_login);
+        TextView tv_back = (TextView) findViewById(R.id.tv_back);
+        TextView tv_register = (TextView) findViewById(R.id.tv_register);
+        TextView tv_find_psw = (TextView) findViewById(R.id.tv_find_psw);
+        Button btn_login = (Button) findViewById(R.id.btn_login);
         et_user_name=(EditText) findViewById(R.id.et_user_name);
         et_psw=(EditText) findViewById(R.id.et_psw);
-        tv_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Denglu.this.finish();
-            }
-        });
+        tv_back.setOnClickListener(v -> Denglu.this.finish());
         //立即注册控件的点击事件
-        tv_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(Denglu.this,RegisterActivity.class);
-                startActivityForResult(intent, 1);
-            }
+        tv_register.setOnClickListener(v -> {
+            Intent intent=new Intent(Denglu.this,RegisterActivity.class);
+            startActivityForResult(intent, 1);
         });
 
 
         //找回密码控件的点击事件
-        tv_find_psw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(Denglu.this,FindPswActivity.class);
-                startActivity(intent);
-            }
+        tv_find_psw.setOnClickListener(v -> {
+            Intent intent=new Intent(Denglu.this,FindPswActivity.class);
+            startActivity(intent);
         });
         //登录按钮的点击事件
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userName=et_user_name.getText().toString().trim();
-                psw=et_psw.getText().toString().trim();
-                String md5Psw= MD5Utils.md5(psw);
-                spPsw=readPsw(userName);
-                if(TextUtils.isEmpty(userName)){
-                 //   Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Denglu.this, "请输入用户名", Toast.LENGTH_SHORT).show();
-                    return;
-                }else if(TextUtils.isEmpty(psw)){
-                    //   Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Denglu.this, "请输入密码", Toast.LENGTH_SHORT).show();
-                    return;
-                }else if(md5Psw.equals(spPsw)){
-                    Toast.makeText(Denglu.this, "您以开启阴阳之门！", Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(Denglu.this, MainActivity.class);
-                    startActivity(intent);
+        btn_login.setOnClickListener(v -> {
+            userName=et_user_name.getText().toString().trim();
+            psw=et_psw.getText().toString().trim();
+            String md5Psw= MD5Utils.md5(psw);
+            spPsw=readPsw(userName);
+            if(TextUtils.isEmpty(userName)){
+             //   Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Denglu.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+            }else if(TextUtils.isEmpty(psw)){
+                //   Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Denglu.this, "请输入密码", Toast.LENGTH_SHORT).show();
+            }else if(md5Psw.equals(spPsw)){
+                Toast.makeText(Denglu.this, "您以开启阴阳之门！", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(Denglu.this, MainActivity.class);
+                startActivity(intent);
 
-                    //保存登录状态
-                    saveLoginStatus(true, userName);
-                    Intent data=new Intent();
-                    data.putExtra("isLogin",true);
-                    setResult(RESULT_OK,data);
-                    Denglu.this.finish();
-                    return;
-                }else if((spPsw!=null&&!TextUtils.isEmpty(spPsw)&&!md5Psw.equals(spPsw))){
-                   // Toast.makeText(Denglu.this, "不好意思，输错了呢！——哪里错了？不告诉你！！！", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Denglu.this, "输入的用户名和密码不一致", Toast.LENGTH_SHORT).show();
-                    return;
-                }else{
-                   // Toast.makeText(Denglu.this, "不好意思，输错了呢！——哪里错了？不告诉你！！！", Toast.LENGTH_SHORT).show();
-                      Toast.makeText(Denglu.this, "此用户名不存在", Toast.LENGTH_SHORT).show();
-                }
+                //保存登录状态
+                saveLoginStatus(userName);
+                Intent data=new Intent();
+                data.putExtra("isLogin",true);
+                setResult(RESULT_OK,data);
+                Denglu.this.finish();
+            }else if((spPsw!=null&&!TextUtils.isEmpty(spPsw)&&!md5Psw.equals(spPsw))){
+               // Toast.makeText(Denglu.this, "不好意思，输错了呢！——哪里错了？不告诉你！！！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Denglu.this, "输入的用户名和密码不一致", Toast.LENGTH_SHORT).show();
+            }else{
+               // Toast.makeText(Denglu.this, "不好意思，输错了呢！——哪里错了？不告诉你！！！", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(Denglu.this, "此用户名不存在", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -164,13 +136,13 @@ public class Denglu extends AppCompatActivity {
     /**
      *保存登录状态和登录用户名到SharedPreferences中
      */
-    private void saveLoginStatus(boolean status, String userName){
+    private void saveLoginStatus(String userName){
         //loginInfo表示文件名
         SharedPreferences sp=getSharedPreferences("loginInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor=sp.edit();//获取编辑器
-        editor.putBoolean("isLogin", status);//存入boolean类型的登录状态
+        editor.putBoolean("isLogin", true);//存入boolean类型的登录状态
         editor.putString("loginUserName", userName);//存入登录状态时的用户名
-        editor.commit();//提交修改
+        editor.apply();//提交修改
 
     }
 

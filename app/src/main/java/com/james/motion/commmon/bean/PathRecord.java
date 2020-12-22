@@ -143,13 +143,12 @@ public class PathRecord implements Parcelable {
         this.mDateTag = mDateTag;
     }
 
+
     @Override
     public String toString() {
-        StringBuilder record = new StringBuilder();
-        record.append("recordSize:" + getPathline().size() + ", ");
-        record.append("distance:" + getDistance() + "m, ");
-        record.append("duration:" + getDuration() + "s");
-        return record.toString();
+        return "recordSize:" + getPathline().size() + ", " +
+                "distance:" + getDistance() + "m, " +
+                "duration:" + getDuration() + "s";
     }
 
     @Override

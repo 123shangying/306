@@ -1,6 +1,6 @@
 package com.james.motion.add.sqlite;
 
-/**
+/*
  * Created by Administrator on 2019/10/15.
  */
 
@@ -19,7 +19,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        /**
+        /*
          * 创建个人信息表
          */
         db.execSQL("CREATE TABLE  IF NOT EXISTS " + U_USERINFO + "( "

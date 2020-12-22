@@ -15,7 +15,7 @@ public class MD5Utils {
 					int number = b&0xff;
 					String hex = Integer.toHexString(number);
 					if(hex.length()==1){
-						sb.append("0"+hex);
+						sb.append("0").append(hex);
 					}else{
 						sb.append(hex);
 					}

@@ -1,8 +1,9 @@
 package com.james.motion.add.activity;
-/**
+/*
  * author : shangying
  * date   : 2019/10/26
  */
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.james.motion.R;
 import com.james.motion.add.view.MyInfoView;
@@ -41,7 +41,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private ImageView iv_course;
     private ImageView iv_exercises;
     private ImageView iv_myInfo;
-    private TextView tv_back;
     private TextView tv_main_title;
     private RelativeLayout rl_title_bar;
 
@@ -59,7 +58,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
      * 获取界面上的UI控件
      */
     private void init() {
-        tv_back = (TextView) findViewById(R.id.tv_back);
+        TextView tv_back = (TextView) findViewById(R.id.tv_back);
         tv_main_title = (TextView) findViewById(R.id.tv_main_title);
         tv_main_title.setText("博学谷课程");
         rl_title_bar = (RelativeLayout) findViewById(R.id.title_bar);

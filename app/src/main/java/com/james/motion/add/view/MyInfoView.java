@@ -21,11 +21,9 @@ import com.james.motion.add.utils.AnalysisUtils;
 
 public class MyInfoView {
     public ImageView iv_head_icon;
-    private LinearLayout ll_head;
-    private RelativeLayout rl_course_history,rl_setting;
     private TextView tv_user_name;
-    private Activity mContext;
-    private LayoutInflater mInflater;
+    private final Activity mContext;
+    private final LayoutInflater mInflater;
     private View mCurrentView;
     public MyInfoView(Activity context) {
         mContext = context;
@@ -41,50 +39,41 @@ public class MyInfoView {
     private void initView() {
         //设置布局文件
         mCurrentView = mInflater.inflate(R.layout.main_view_myinfo, null);
-        ll_head= (LinearLayout) mCurrentView.findViewById(R.id.ll_head);
+        LinearLayout ll_head = (LinearLayout) mCurrentView.findViewById(R.id.ll_head);
         iv_head_icon=(ImageView) mCurrentView.findViewById(R.id.iv_head_icon);
-        rl_course_history=(RelativeLayout) mCurrentView.findViewById(R.id.rl_course_history);
-        rl_setting = (RelativeLayout) mCurrentView.findViewById(R.id.rl_setting);
+        RelativeLayout rl_course_history = (RelativeLayout) mCurrentView.findViewById(R.id.rl_course_history);
+        RelativeLayout rl_setting = (RelativeLayout) mCurrentView.findViewById(R.id.rl_setting);
         tv_user_name=(TextView) mCurrentView.findViewById(R.id.tv_user_name);
         mCurrentView.setVisibility(View.VISIBLE);
         setLoginParams(readLoginStatus());//设置登录时界面控件的状态
-        ll_head.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //判断是否已经登录
-                if(readLoginStatus()){
-                    //已登录跳转到个人资料界面
-                    Intent intent=new Intent(mContext, UserInfoActivity.class);
-                    mContext.startActivity(intent);
-                }else{
-                    //未登录跳转到登录界面
-                    Intent intent=new Intent(mContext, Denglu.class);
-                    mContext.startActivityForResult(intent,1);
-                }
+        ll_head.setOnClickListener(v -> {
+            //判断是否已经登录
+            if(readLoginStatus()){
+                //已登录跳转到个人资料界面
+                Intent intent=new Intent(mContext, UserInfoActivity.class);
+                mContext.startActivity(intent);
+            }else{
+                //未登录跳转到登录界面
+                Intent intent=new Intent(mContext, Denglu.class);
+                mContext.startActivityForResult(intent,1);
             }
         });
-        rl_course_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(readLoginStatus()){
-                    //跳转到播放记录界面
-                    Toast.makeText(mContext, "这个地方还没有撸好！！！", Toast.LENGTH_SHORT).show();
+        rl_course_history.setOnClickListener(v -> {
+            if(readLoginStatus()){
+                //跳转到播放记录界面
+                Toast.makeText(mContext, "这个地方还没有撸好！！！", Toast.LENGTH_SHORT).show();
 
-                }else{
-                    Toast.makeText(mContext, "亲，不登录我怎么可能让你用呢？？？", Toast.LENGTH_SHORT).show();
-                }
+            }else{
+                Toast.makeText(mContext, "亲，不登录我怎么可能让你用呢？？？", Toast.LENGTH_SHORT).show();
             }
         });
-        rl_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(readLoginStatus()){
-                    //跳转到设置界面
-                    Intent intent=new Intent(mContext, SettingActivity.class);
-                    mContext.startActivityForResult(intent,1);
-                }else{
-                    Toast.makeText(mContext, "滚回去登录！！！", Toast.LENGTH_SHORT).show();
-                }
+        rl_setting.setOnClickListener(v -> {
+            if(readLoginStatus()){
+                //跳转到设置界面
+                Intent intent=new Intent(mContext, SettingActivity.class);
+                mContext.startActivityForResult(intent,1);
+            }else{
+                Toast.makeText(mContext, "滚回去登录！！！", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -121,7 +110,6 @@ public class MyInfoView {
      */
     private boolean readLoginStatus(){
         SharedPreferences sp=mContext.getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
-        boolean isLogin=sp.getBoolean("isLogin", false);
-        return isLogin;
+        return sp.getBoolean("isLogin", false);
     }
 }

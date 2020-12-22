@@ -98,14 +98,11 @@ public class LogUtils {
             String show = logContent.substring(0, showLength);
             e(tag, show);
             /* 剩余的字符串如果大于规定显示的长度，截取剩余字符串进行递归，否则打印结果 */
+            String partLog = logContent.substring(showLength,logContent.length());
             if ((logContent.length() - showLength) > showLength) {
-                String partLog = logContent.substring(showLength,
-                        logContent.length());
                 showLargeLog(partLog, showLength, tag);
             } else {
-                String printLog = logContent.substring(showLength,
-                        logContent.length());
-                e(tag, printLog);
+                e(tag, partLog);
             }
 
         } else {
@@ -147,12 +144,10 @@ public class LogUtils {
             }
             /* 剩余的字符串如果大于规定显示的长度，截取剩余字符串进行递归，否则打印结果 */
             if ((logContent.length() - showLength) > showLength) {
-                String partLog = logContent.substring(showLength,
-                        logContent.length());
+                String partLog = logContent.substring(showLength,logContent.length());
                 showLargeLog(logType, partLog, showLength, tag);
             } else {
-                String printLog = logContent.substring(showLength,
-                        logContent.length());
+                String printLog = logContent.substring(showLength,logContent.length());
                 switch (logType) {
                     case LOG_I:
                         i(tag, printLog);

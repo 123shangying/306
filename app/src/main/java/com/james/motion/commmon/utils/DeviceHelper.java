@@ -85,7 +85,7 @@ public class DeviceHelper {
     /**
      * 打开文件
      *
-     * @param file
+     *
      */
     public static void openFile(Context context, File file, String mimeType) {
         if (file != null && file.exists()) {
@@ -133,9 +133,9 @@ public class DeviceHelper {
             return type;
         }
 
-        for (int i = 0; i < MIME_MapTable.length; i++) {
-            if (end.equals(MIME_MapTable[i][0])) {
-                type = MIME_MapTable[i][1];
+        for (String[] strings : MIME_MapTable) {
+            if (end.equals(strings[0])) {
+                type = strings[1];
             }
         }
         return type;

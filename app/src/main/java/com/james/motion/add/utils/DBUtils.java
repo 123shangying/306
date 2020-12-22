@@ -11,10 +11,9 @@ import com.james.motion.add.sqlite.SQLiteHelper;
 
 public class DBUtils {
     private static DBUtils instance = null;
-    private static SQLiteHelper helper;
     private static SQLiteDatabase db;
     public DBUtils(Context context) {
-        helper = new SQLiteHelper(context);
+        SQLiteHelper helper = new SQLiteHelper(context);
         db = helper.getWritableDatabase();
     }
     public static DBUtils getInstance(Context context) {
@@ -39,7 +38,7 @@ public class DBUtils {
     }
     /**
      * 获取个人资料信息
-     * @return
+     *
      */
     public UserBean getUserInfo(String userName) {
         String sql = "SELECT * FROM " + SQLiteHelper.U_USERINFO + " WHERE userName=?";
@@ -94,7 +93,7 @@ public class DBUtils {
         }
         return delSuccess;
     }
-    /**
+    /*
      * 获取视频记录信息
      */
 

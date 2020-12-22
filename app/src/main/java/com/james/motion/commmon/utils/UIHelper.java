@@ -58,11 +58,11 @@ public class UIHelper {
             return result;
         }
         while (tmp != decorView && tmp != parent) {
+            assert tmp != null;
             tmp.getHitRect(tmpRect);
-            if (!tmp.getClass().equals(FRAGMENT_CON)) {
-                result.left += tmpRect.left;
-                result.top += tmpRect.top;
-            }
+            tmp.getClass();
+            result.left += tmpRect.left;
+            result.top += tmpRect.top;
             tmp = (View) tmp.getParent();
 
             //added by isanwenyu@163.com fix bug #21 the wrong rect user will received in ViewPager
@@ -292,7 +292,7 @@ public class UIHelper {
     /**
      * 得到应用程序的包名
      *
-     * @return
+     *
      */
     public static String getPackageName() {
         return MyApplication.getInstance().getPackageName();
@@ -301,8 +301,8 @@ public class UIHelper {
     /**
      * 延迟执行任务
      *
-     * @param task
-     * @param delayMillis
+     *
+     *
      */
     public static void postTaskDelay(Runnable task, int delayMillis) {
         getMainThreadHandler().postDelayed(task, delayMillis);
@@ -311,7 +311,7 @@ public class UIHelper {
     /**
      * 得到主线程Handler
      *
-     * @return
+     *
      */
     public static Handler getMainThreadHandler() {
         return MyApplication.getHandler();

@@ -35,8 +35,7 @@ public class DateUtils {
     public static String getStringDateShort(long time) {
         Date currentTime = new Date(time);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(currentTime);
-        return dateString;
+        return formatter.format(currentTime);
     }
 
 }

@@ -98,6 +98,15 @@
             android:screenOrientation="fullSensor"
             android:theme="@style/NoActionBar"
             android:windowSoftInputMode="adjustPan|stateHidden"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             tools:ignore="Instantiatable" /> <!-- 承载界面 -->
         <activity
             android:name=".ui.activity.HomeActivity"

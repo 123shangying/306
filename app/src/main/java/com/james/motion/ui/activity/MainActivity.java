@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             editor = preferences.edit();
 // 将登录标志位设置为false，下次登录时不在显示引导页
             editor.putBoolean("firstStart", false);
-            editor.commit();
+            editor.apply();
 
 //跳转到引导页
             Intent intent = new Intent();

@@ -113,7 +113,7 @@ public class GuidePageActivity extends AppCompatActivity {
     @OnClick(R.id.btn_test)
     public void onViewClicked() {
         //跳转到主activity
-        Intent intent = new Intent(GuidePageActivity.this, Denglu.class);
+        Intent intent = new Intent(GuidePageActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 
